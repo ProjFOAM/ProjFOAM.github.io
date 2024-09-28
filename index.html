@@ -331,36 +331,66 @@
   </div>
 </section>
 
-<!--<section class="section">-->
-<!--  <div class="container is-max-desktop">-->
-<!--    &lt;!&ndash; Abstract. &ndash;&gt;-->
-<!--    <div class="columns is-centered has-text-centered">-->
-<!--      <div class="column is-four-fifths">-->
-<!--        <h2 class="title is-3">Fine-tuned Goal Imagination Module</h2>-->
-<!--        <div class="content has-text-justified">-->
-<!--          <p>-->
-<!--            Multi-task imitation learning (MTIL) has shown significant potential in robotic-->
-<!--            manipulation by enabling agents to perform various tasks using a unified policy.-->
-<!--            This simplifies the policy deployment and enhances the agent's adaptability across different contexts.-->
-<!--            However, key challenges remain, such as maintaining action reliability-->
-<!--            (e.g., avoiding abnormal action sequences that deviate from nominal task trajectories),-->
-<!--            distinguishing between similar tasks, and generalizing to unseen scenarios.-->
-<!--            To address these challenges, we introduce the Foresight-Augmented Manipulation Policy (FoAM),-->
-<!--            an innovative MTIL framework.-->
-<!--            FoAM not only learns to mimic expert actions but also predicts the visual outcomes of those actions to enhance decision-making.-->
-<!--            Additionally, it integrates multi-modal goal inputs, such as visual and language prompts,-->
-<!--            overcoming the limitations of single-conditioned policies.-->
-<!--            We evaluated FoAM across over 100 tasks in both simulation and real-world settings,-->
-<!--            demonstrating that it significantly improves IL policy performance, outperforming current state-of-the-art IL baselines by up to 41% in success rate.-->
-<!--            Furthermore, we released a simulation benchmark for robotic manipulation,-->
-<!--            featuring 10 task suites and over 80 challenging tasks designed for multi-task policy training and evaluation.-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;/ Abstract. &ndash;&gt;-->
-<!--  </div>-->
-<!--</section>-->
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Fine-tuned Goal Imagination Module</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce a goal imagination module into the FoAM framework to improve the agent's autonomy in
+            achieving desired goal states. We selected <a href="https://www.timothybrooks.com/instruct-pix2pix" target="_blank">InstructPix2Pix</a> as our goal imagination module, utilizing
+            approximately 20,000 pairs of training data. Of these, 16,000 pairs were derived from the cleaning robot
+            expert demonstrations provided by RT-1. In this cleaning process, the first and last frames of the
+            demonstrations were used as the original and edited images, respectively, with the corresponding task
+            name serving as the instruction. Given that many of the demonstration datasets contained perturbations
+            in the final frames caused by robot arm movements, we undertook a detailed data cleaning procedure to
+            remove noise and ensure the training data quality. Additionally, we incorporated over 4,000 data pairs
+            sourced from our own simulation and real-world datasets. We fine-tuned the model for 500 epochs on a
+            single NVIDIA H100 GPU, a process that required approximately 3 days. During the image generation stage,
+            with the model weights pre-loaded, processing each initial observation of size 480&times;640&times;3
+            took about 4 seconds.
+            The figures below illustrate the demonstrations of the fine-tuned model in both simulation and
+            real-world scenarios. For each demonstration, the image on the left represents the initial visual
+            observation, while the image on the right depicts the goal image generated according to the given
+            language prompt.
+            <br>
+              <div style="display: flex; justify-content: center; gap: 20px;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_1.png" alt="Figure 1" style="width: 70%;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_2.png" alt="Figure 2" style="width: 70%;">
+              </div>
+
+              <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_3.png" alt="Figure 3" style="width: 70%;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_5.png" alt="Figure 5" style="width: 70%;">
+              </div>
+
+              <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_6.png" alt="Figure 6" style="width: 70%;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_7.png" alt="Figure 7" style="width: 70%;">
+              </div>
+
+              <div style="display: flex; justify-content: center; gap: 20px; margin-top: 20px;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_8.png" alt="Figure 8" style="width: 70%;">
+                <img src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/images/ip2p_9.png" alt="Figure 9" style="width: 70%;">
+              </div>
+            <br>
+            Our experiments showed that FoAM with goal imagination module demonstrated more robust performance than FoAM.
+            We attribute this to the deep semantic information retained in the images
+            generated by VLM, which helps prevent the model from overfitting when working with
+            small datasets. Furthermore, the goal images generated by VLM maintain a consistent
+            overall style. This style uniformity ensures that goal images generated at different times
+            share similar features, enhancing the robot's ability to adapt to dynamic real-world conditions,
+            thereby improving task activation reliability. Additionally, with the introduction of VLM, the agent
+            can autonomously and efficiently acquire the goal image, with a 480&times;640 pixel goal image being
+            obtained in an average of 4 seconds.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-desktop">
@@ -415,7 +445,7 @@
         <div class="content has-text-justified">
           <p>
             We conducted an in-depth exploration of FoAM, focusing on three key aspects:
-            <strong>external disturbance.</strong>, <strong>reactiveness</strong>, and <strong>unseen task generalization</strong>.
+            <strong>external disturbance</strong>, <strong>reactiveness</strong>, and <strong>unseen task generalization</strong>.
             <br>
             <br>
             <strong>External Disturbance:</strong> Despite the introduction of additional objects to disrupt the operation process,
