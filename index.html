@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
   <meta charset="utf-8">
   <meta name="description"
@@ -214,7 +214,7 @@
   <div class="container is-max-desktop">
     <div class="hero-body">
       <video id="teaser" autoplay muted loop playsinline controls height="100%" class="video-with-border">
-        <source src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/static/videos/AccompanyingVideo.mp4" type="video/mp4">
+        <source src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/videos/AccompanyingVideo.mp4" type="video/mp4">
       </video>
     </div>
   </div>
@@ -372,6 +372,82 @@
     <!--/ Abstract. -->
   </div>
 </section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Limitations of Prior Works</h2>
+        <div class="content has-text-justified">
+          <p>
+            The low reliability of multi-task policies remains a persistent challenge. Existing MTIL policies that align
+            robotic actions with expert actions based on goal conditions often fail to reason about these ambiguities and
+            variations in expert demonstration data, severely impacting the agents’ performance on individual tasks.
+            <br>
+            <br>
+            Meanwhile, single-goal conditioned policies come with their own limitations. For instance, <strong>polices conditioned
+            on language instructions</strong> struggle to generalize to unseen tasks without data augmentation.
+            While <strong>policies conditioned on goal images</strong> offer fne-grained guidance,
+            they frequently encounter ambiguities
+            in task activation and necessitate human intervention to accurately acquire and interpret the goal images.
+            The two videos below demonstrate the limitations of <strong>Language-based MT Policy</strong> and
+            <strong>Image-based MT Policy</strong>, respectively.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+  <br>
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <!-- External Disturbance Video -->
+      <div class="column">
+        <div class="content">
+          <h4 class="title is-3">Language-based MT Policy</h4>
+          <video id="language-based-limitation" autoplay muted controls loop playsinline height="100%">
+            <source src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/videos/Limitations/languagebased.mp4" type="video/mp4">
+          </video>
+            <p>
+              <strong style="font-size: smaller;">Language prompt: Put carambola into the green bowl.</strong>
+              <br>
+              <br>
+              <strong>Limitations:</strong>
+              <ul>
+                <li>Struggle to generalize to unseen tasks.</li>
+              </ul>
+            <p>
+        </div>
+      </div>
+
+      <!-- Reactiveness Video -->
+      <div class="column">
+        <h4 class="title is-3">Image-based MT Policy</h4>
+        <div class="columns is-centered">
+          <div class="column content">
+            <video id="image-based-limitation" autoplay muted loop controls playsinline height="100%">
+              <source src="https://github.com/ProjFOAM/ProjFOAM.github.io/raw/refs/heads/main/videos/Limitations/imagebased.mp4" type="video/mp4">
+            </video>
+              <p>
+                <strong style="font-size: smaller;">Goal-Image prompt: Place the bitter melon on locker bottom layer.</strong>
+                <br>
+                <br>
+                <strong>Limitations:</strong>
+                <ul>
+                  <li>Encountered goal condition ambiguity</li>
+                  <li>Required human intervention for acquiring goal images</li>
+                </ul>
+              <p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
 
 <section class="section">
   <div class="container is-max-desktop">
